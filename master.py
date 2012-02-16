@@ -25,11 +25,9 @@ M = 1000 # mass of star (G == 1)
 Star = sphere(pos=vector(0,0,0),radius=0.1,color=color.yellow, velocity=vector(0,0,0), mass=M)
 planets.append(Star)
 
-# Planet 1
-#initpos1 = vector(0,1,0) # initial position vector of Planet1
-#Planet1 = sphere(pos=initpos1,radius=0.05,color=color.blue, velocity=vector(-10,0,0), mass=1)
-#planets.append(Planet1)
+# Planets
 create_planet(1,1)
+create_planet(2,1)
 
 # Function definitions
 
