@@ -12,7 +12,7 @@ def create_planet(initial_distance,m):
     mag_v = (sqrt(G*M/initial_distance))#magnitude of velocity of planet
     print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
     planet_v = mag_v * -vector(cos(angle), sin(angle), 0) # initial velocity of planet
-    planet = sphere(pos=planet_pos,radius=0.05,color=color.blue, mass=m, velocity = planet_v)
+    planet = sphere(pos=planet_pos,radius=0.05,color=color.blue, mass=m, velocity = planet_v, lastpos=vector(0,0,0))
     planets.append(planet)
 
 # ########## Settings ####################
