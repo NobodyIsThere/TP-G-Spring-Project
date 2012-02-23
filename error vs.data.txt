@@ -1,0 +1,68 @@
+******** EasyPlot save file ********
+******** graph attributes   ********
+/fpo  pd  8.00 6.00        ;page size
+/sf   "Arial"              ;font
+/sf   b   OFF              ;Bold
+/sf   i   OFF              ;Italic
+/sf   u   OFF              ;Underline
+/fpo  pt  12.00            ;base point size
+/fpo  gt  24.00            ;graph-title size
+/fpo  at  24.00            ;axis-title size
+/fpo  an  24.00            ;annotation size
+/fpo  lt  12.00            ;legend-text size
+/fpo  po  OFF              ;portrait mode
+/fpo  co  OFF              ;color
+/fpo  sc  ON               ;scale text by graph size
+/fpo  lw  3.00             ;line weight
+/sa   d   0.50             ;data mark size
+/sa   t   1.00             ;tic size
+/sa   b   0.00             ;bar separation
+//angular_grid  15
+
+******** open new graph     ********
+//pos 0 0 1 1
+/ag              
+/st    OFF                 ;3D state
+
+/sa m  1  2                ;mark, dash & color for column 2
+//cwt  1  2                ;line weight
+/sm    ON                  ;data marks
+/sc    OFF                 ;connect points
+/sd    OFF                 ;dashed lines
+/sb    OFF                 ;bar
+/se x  OFF                 ;X-error bars
+/se y  OFF                 ;Y-error bars
+/td    "xy"                ;define the columns
+    2e-005  0.00700709
+  1.5e-005  0.00700709
+    1e-005  0.00262483
+    5e-006  0.00032853
+//nc                       ;end of curve
+
+/sa l  "y = -2.30E7x^2 +1062x^1 -0.00473, max dev:9.70E-4"  2 ;legend for column 2
+/sa m  2  2                ;mark, dash & color for column 2
+//cwt  1  2                ;line weight
+/sm    OFF                 ;data marks
+/sc    ON                  ;connect points
+/td    "xy"                ;define the columns
+/ac    "c:\users\user\error" ;file or eqn
+
+
+******** x-axis ********
+/et    x "Time Step (dt)"  ;axis title
+/or    x  0  2.0E-5        ;axis range
+/oaam  x ON                ;min tics
+/oaamm x ON                ;maj tics
+/ogs   x h                 ;grid style
+
+******** y-axis ********
+/et    y "Error in the area" ;axis title
+/or    y  0  .008          ;axis range
+/oaam  y ON                ;min tics
+/oaamm y ON                ;maj tics
+/ogs   y h                 ;grid style
+
+/et g  "\Ul/The relationship between the error in the area and the value of the time step" ;graph title
+/aa    1.85014e-006 0.00637333 "y = -2.30E7x^{2} +1062x^{1} -0.00473, max dev:9.70E-4, r^{2}=0.937" BORD=0 FIX=0 CLEAR=0 ROT=0  1  2
+/og    OFF                 ;grid
+
