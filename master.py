@@ -9,9 +9,10 @@ from random import *
 def create_planet(initial_distance,m):
     angle = randrange(0, 6, 1) # random angle between 0 and 2pi with steps of pi/8
     planet_pos = initial_distance * vector(sin(angle),cos(angle),0) # initial position vector of Planet
-    mag_v = (sqrt(G*M/initial_distance)) #magnitude of velocity of planet
+    mag_v = (sqrt(G*M/initial_distance))#magnitude of velocity of planet
+    print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
     planet_v = mag_v * -vector(cos(angle), sin(angle), 0) # initial velocity of planet
-    planet = sphere(pos=planet_pos,radius=0.05*m,color=color.blue, mass=m, velocity = planet_v, lastpos=vector(0,0,0))
+    planet = sphere(pos=planet_pos,radius=0.05,color=color.blue, mass=m, velocity = planet_v)
     planets.append(planet)
 
 # ########## Settings ####################
@@ -23,19 +24,24 @@ keplers_law_period = 10
 # ########## Definitions ####################
 step = 0 # Current step
 dt = 0.001 # timestep
-G = 0.0001
+G = 1.0
 
 # List of planets
 planets = []
 
 # Star
-M = 1000 # mass of star
+M = 1000# mass of star (G == 1)
 Star = sphere(pos=vector(0,0,0),radius=0.1,color=color.yellow, velocity=vector(0,0,0), mass=M)
 planets.append(Star)
 
 # Planets
-create_planet(1,1)
-create_planet(2,1)
+##create_planet(10,1)
+##create_planet(20,1)
+##create_planet(50,4)
+##create_planet(80,6)
+##create_planet(60,7)
+##create_planet(30,3)
+create_planet(3,1)
 
 # Trace for Kepler's Second Law proof
 kepler_trace = curve(color = color.blue)
@@ -66,9 +72,9 @@ while True:
             if planet != otherplanet:
                 # Calculate the force
                 F = calc_gravity(planet, otherplanet)
-                a = F/planet.mass
                 # Update velocity
-                planet.velocity = planet.velocity + a
+                planet.velocity = planet.velocity + F*dt/planet.mass
+                #planet.velocity = F
                 
         # Update position
         if planet!=Star:
