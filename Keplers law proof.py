@@ -1,6 +1,5 @@
 #Skeleton code starting point for Yr 1 Theory Group Project
 
-from __future__ import print_function, division
 from visual import *
 
 dt = 0.0001 # timestep # the time step can be decreased to decrease the approximation
