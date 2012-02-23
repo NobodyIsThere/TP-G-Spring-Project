@@ -9,7 +9,7 @@ from random import *
 def create_planet(initial_distance,m):
     angle = randrange(0, 6, 1) # random angle between 0 and 2pi with steps of pi/8
     planet_pos = initial_distance * vector(sin(angle),cos(angle),0) # initial position vector of Planet
-    mag_v = (sqrt(G*M*5000/initial_distance)) #magnitude of velocity of planet
+    mag_v = (sqrt(G*M/initial_distance)) #magnitude of velocity of planet
     planet_v = mag_v * -vector(cos(angle), sin(angle), 0) # initial velocity of planet
     planet = sphere(pos=planet_pos,radius=0.05*m,color=color.blue, mass=m, velocity = planet_v, lastpos=vector(0,0,0))
     planets.append(planet)
@@ -17,7 +17,7 @@ def create_planet(initial_distance,m):
 # ########## Settings ####################
 keplers_law = False
 keplers_law_planet_index = 1 # Index of the planet to use in K2L calculations
-keplers_law_period = 100
+keplers_law_period = 10
 # ########## End settings ####################
 
 # ########## Definitions ####################
