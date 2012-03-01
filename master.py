@@ -31,7 +31,7 @@ def create_planet(initial_distance,m):
     angle = randrange(0, 6, 1) # random angle between 0 and 2pi with steps of pi/8
     planet_pos = initial_distance * vector(sin(angle),cos(angle),0) # initial position vector of Planet
     mag_v = (sqrt(G*M/initial_distance))#magnitude of velocity of planet
-    #print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
+    print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
     planet_v = mag_v * -vector(-cos(angle), sin(angle), 0) # initial velocity of planet
     planet = Planet(pos=planet_pos, velocity=planet_v, mass=m, lastpos=vector(0,0,0))
     planets.append(planet)
@@ -63,10 +63,10 @@ def kepler(p,s):
 # ########## End function definitions ###################
 
 # ########## Settings ####################
-keplers_law = False
+keplers_law = True
 keplers_law_planet_index = 1 # Index of the planet to use in K2L calculations
 keplers_law_period = 10
-# ########## End settings ####################
+# ########## End settings ####################
 
 # ########## Definitions ####################
 
@@ -120,12 +120,6 @@ M_Slider.value = 50
 D_Slider = slider( pos=(-10,-30), width=7, length=70, axis=(1,0,0))#define initial distance slider
 D_Slider.value = 50
 
-
-
-
-
-
-
 # ########## End definitions ####################
 
 while True:
@@ -150,6 +144,8 @@ while True:
 
         #remove planet from view if it leaves solar system
         if abs(planet.pos)> 20:
+            planet.avatar1.trail_object.pos = []
+            planet.avatar2.trail_object.pos = []
             planet.visible = false
             planets.remove(planet)
             del planet
@@ -175,12 +171,6 @@ while True:
 
         planet.avatar1.color = color.blue
         planet.avatar2.color = color.blue
-        
-        if abs(planet.pos)> 19:
-            #planet.avatar.trail_object.pos = []
-            planet.avatar1.trail_object.pos = []
-            planet.avatar2.trail_object.pos = []
-           
 
     planets[following].avatar1.color = color.red
     planets[following].avatar2.color = color.red
