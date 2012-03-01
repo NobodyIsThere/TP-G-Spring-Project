@@ -31,7 +31,7 @@ def create_planet(initial_distance,m):
     angle = randrange(0, 6, 1) # random angle between 0 and 2pi with steps of pi/8
     planet_pos = initial_distance * vector(sin(angle),cos(angle),0) # initial position vector of Planet
     mag_v = (sqrt(G*M/initial_distance))#magnitude of velocity of planet
-    print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
+    #print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
     planet_v = mag_v * -vector(-cos(angle), sin(angle), 0) # initial velocity of planet
     planet = Planet(pos=planet_pos, velocity=planet_v, mass=m, lastpos=vector(0,0,0))
     planets.append(planet)
@@ -63,10 +63,10 @@ def kepler(p,s):
 # ########## End function definitions ###################
 
 # ########## Settings ####################
-keplers_law = True
+keplers_law = False
 keplers_law_planet_index = 1 # Index of the planet to use in K2L calculations
 keplers_law_period = 10
-# ########## End settings ####################
+# ########## End settings ####################
 
 # ########## Definitions ####################
 
@@ -106,12 +106,23 @@ def addplanet():
     Mass = float(((M_Slider.value)*(9.5/100))+0.5)
     Distance = float(((D_Slider.value)*(9.5/100))+0.5)
     create_planet(Distance, Mass)
-    
+
+def toggle_kepler():
+    global keplers_law #tells python that keplers_law is a global variable
+    if bToggleKepler.text == 'Kepler on':
+        # If the button currently says 'Kepler on'
+        keplers_law = True           # Change the global variable to True
+        bToggleKepler.text = 'Kepler off' # Change the button label
+    else:
+        # Otherwise the button said 'stop'
+        keplers_law = False
+        bToggleKepler.text = 'Kepler on'
 
 # The control window and controls
 cwindow = controls()
 bChangeFrame = button(pos=(-50,8), width=40, height=30, text="Change", action=changeframe)
 bSpawnPlannet = button(pos=(-65,-25), width=70, height=30, text="+1 Planet", action=addplanet)
+bToggleKepler = button(pos=(-65,40), width=70, height=30, text="Kepler on", action=toggle_kepler)
 
 # sliders to control variables mass and initial distance
 M_Slider = slider( pos=(-10,-20), width=7, length=70, axis=(1,0,0)) #define mass slider
@@ -119,6 +130,8 @@ M_Slider.value = 50
 
 D_Slider = slider( pos=(-10,-30), width=7, length=70, axis=(1,0,0))#define initial distance slider
 D_Slider.value = 50
+
+
 
 # ########## End definitions ####################
 
@@ -144,18 +157,19 @@ while True:
 
         #remove planet from view if it leaves solar system
         if abs(planet.pos)> 20:
-            planet.avatar1.trail_object.pos = []
-            planet.avatar2.trail_object.pos = []
             planet.visible = false
             planets.remove(planet)
             del planet
-
+    #turining keplers trace on and off
     if keplers_law == True:
         if step%keplers_law_period==0:
             kepler_trace.append(pos=planets[0].pos)
             kepler_trace.append(pos=planets[keplers_law_planet_index].pos)
             print(kepler(planets[keplers_law_planet_index], planets[0]))
             planets[keplers_law_planet_index].lastpos = vector(planets[keplers_law_planet_index].pos)
+
+    if bToggleKepler.text == 'Kepler on':  
+            kepler_trace.pos = []
 
     # Now draw the planets
     for planet in planets:
@@ -171,6 +185,12 @@ while True:
 
         planet.avatar1.color = color.blue
         planet.avatar2.color = color.blue
+        
+        if abs(planet.pos)> 19:
+            #planet.avatar.trail_object.pos = []
+            planet.avatar1.trail_object.pos = []
+            planet.avatar2.trail_object.pos = []
+           
 
     planets[following].avatar1.color = color.red
     planets[following].avatar2.color = color.red
