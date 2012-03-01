@@ -32,7 +32,7 @@ def create_planet(initial_distance,m):
     planet_pos = initial_distance * vector(sin(angle),cos(angle),0) # initial position vector of Planet
     mag_v = (sqrt(G*M/initial_distance))#magnitude of velocity of planet
     print(m*mag_v**2/initial_distance, G*M*m/initial_distance**2)
-    planet_v = mag_v * -vector(cos(angle), sin(angle), 0) # initial velocity of planet
+    planet_v = mag_v * -vector(-cos(angle), sin(angle), 0) # initial velocity of planet
     planet = Planet(pos=planet_pos, velocity=planet_v, mass=m, lastpos=vector(0,0,0))
     planets.append(planet)
 
@@ -63,7 +63,7 @@ def kepler(p,s):
 # ########## End function definitions ###################
 
 # ########## Settings ####################
-keplers_law = False
+keplers_law = True
 keplers_law_planet_index = 1 # Index of the planet to use in K2L calculations
 keplers_law_period = 10
 # ########## End settings ####################
@@ -96,6 +96,7 @@ following = 0
 # Planets
 create_planet(3,1)
 create_planet(4,1)
+create_planet(5,1)
 
 # Trace for Kepler's Second Law proof
 kepler_trace = curve(color = color.blue)
