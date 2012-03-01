@@ -5,6 +5,7 @@
 from visual import *
 from visual.controls import *
 from random import *
+import audiere 
 
 # ########## Classes ####################
 
@@ -22,7 +23,7 @@ class Planet:
         self.mass = mass
         self.lastpos = lastpos
 
-# ########## Classes ####################
+# ########## End Classes ####################
 
 # ########## Function definitions ####################
 
@@ -35,6 +36,13 @@ def create_planet(initial_distance,m):
     planet_v = mag_v * -vector(-cos(angle), sin(angle), 0) # initial velocity of planet
     planet = Planet(pos=planet_pos, velocity=planet_v, mass=m, lastpos=vector(0,0,0))
     planets.append(planet)
+
+#function to add planet that calls function create_planet
+def addplanet():
+    #set min and max of sliders
+    Mass = float(((M_Slider.value)*(9.5/100))+0.5)
+    Distance = float(((D_Slider.value)*(9.5/100))+0.5)
+    create_planet(Distance, Mass)
 
 # Returns force on obj1 due to obj2
 def calc_gravity(obj1, obj2):
@@ -60,7 +68,32 @@ def changeframe():
 def kepler(p,s):
     return ((diff_angle((s.pos - p.pos),(s.pos - p.lastpos)))*mag(s.pos - p.lastpos)*mag(s.pos - p.pos)*(1./2))
 
+def toggle_kepler():
+    global keplers_law #tells python that keplers_law is a global variable
+    if bToggleKepler.text == 'Kepler on':
+        # If the button currently says 'Kepler on'
+        keplers_law = True           # Change the global variable to True
+        bToggleKepler.text = 'Kepler off' # Change the button label
+    else:
+        # Otherwise the button said 'stop'
+        keplers_law = False
+        bToggleKepler.text = 'Kepler on'
+
 # ########## End function definitions ###################
+
+# ########## Audio ################
+
+# Open default audio device, with label "d"
+d = audiere.open_device()
+freq = 1000.
+tone = d.create_tone(freq) # label "tone" is arbitrary
+tone.pan = -1 # Pan can be from L (-1) to R (+1)
+tone.volume = 1 # Volume control, from 0 to 1
+tone.play() # Play the note
+tone.pitchshift = 0.8 # Reduce the frequency by a factor of 5
+
+ 
+# Create tones on audio device "d" with frequency freq
 
 # ########## Settings ####################
 keplers_law = False
@@ -100,24 +133,6 @@ create_planet(4,1)
 # Trace for Kepler's Second Law proof
 kepler_trace = curve(color = color.blue)
 
-#function to add planet that calls function create_planet
-def addplanet():
-    #set min and max of sliders
-    Mass = float(((M_Slider.value)*(9.5/100))+0.5)
-    Distance = float(((D_Slider.value)*(9.5/100))+0.5)
-    create_planet(Distance, Mass)
-
-def toggle_kepler():
-    global keplers_law #tells python that keplers_law is a global variable
-    if bToggleKepler.text == 'Kepler on':
-        # If the button currently says 'Kepler on'
-        keplers_law = True           # Change the global variable to True
-        bToggleKepler.text = 'Kepler off' # Change the button label
-    else:
-        # Otherwise the button said 'stop'
-        keplers_law = False
-        bToggleKepler.text = 'Kepler on'
-
 # The control window and controls
 cwindow = controls()
 bChangeFrame = button(pos=(-50,8), width=40, height=30, text="Change", action=changeframe)
@@ -131,13 +146,19 @@ M_Slider.value = 50
 D_Slider = slider( pos=(-10,-30), width=7, length=70, axis=(1,0,0))#define initial distance slider
 D_Slider.value = 50
 
-
-
 # ########## End definitions ####################
 
 while True:
 
     rate(30)  # max fps
+
+    freq= planets[2].velocity.mag*500/mag(planets[2].pos - planets[0].pos)
+    tone = d.create_tone(freq) # label "tone" is arbitrary
+    tone.pan = 0 # Pan can be from L (-1) to R (+1)
+    tone.volume = 1 # Volume control, from 0 to 1
+    tone.play() # Play the note
+    tone.pitchshift = 1 # Reduce the frequency by a factor of 5
+
     scene1.select()
 
     cwindow.interact()
