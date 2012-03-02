@@ -138,7 +138,7 @@ def toggle_sound():
     global play_sound
     
     play_sound = play_sound==False
-
+    
 # ########## End function definitions ###################
 
 # ########## Audio ################
@@ -270,6 +270,9 @@ while True:
             print(kepler(planets[keplers_law_planet_index], planets[0]))
             # Update the last position, to calculate the next area
             planets[keplers_law_planet_index].lastpos = vector(planets[keplers_law_planet_index].pos)
+
+    if bToggleKepler.text == 'Kepler on':  
+            kepler_trace.pos = []
 
     # Now draw the planets
     for planet in planets:
